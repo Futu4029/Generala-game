@@ -1,5 +1,5 @@
-import { React,   } from 'react'
-import "../styles/Die.css"
+import { React,   } from 'react';
+import "../styles/Die.css";
 
 const Die = ({face, rolling}) => {
 

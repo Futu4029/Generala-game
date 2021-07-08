@@ -4,6 +4,12 @@
   flex-flow: column nowrap;
   min-height: 100vh;
 }
+
+.Score, .TotalScore{
+    text-align: center;
+}
+
+
   
 /* Shows each dice in one row */
 .RollDice-container{

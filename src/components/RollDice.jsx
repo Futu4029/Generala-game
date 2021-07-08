@@ -1,6 +1,7 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import "../styles/RollDice.css";
 import Die from "./Die";
+import Jugadas from "./Jugadas";
 
 const RollDice = ({ sides }) => {
   const [dices, setDices] = useState({
@@ -13,6 +14,7 @@ const RollDice = ({ sides }) => {
     score: 0,
     totalScore: 0,
   });
+
   const { die1, die2, die3, die4, die5, rolling, score, totalScore } = dices;
 
   const roll = () => {
@@ -27,8 +29,6 @@ const RollDice = ({ sides }) => {
     const score4 = Object.values(newDie4);
     const score5 = Object.values(newDie5);
     
-
-
     setDices(
       // Changing state upon click
       (prevState) => ({ ...prevState,
@@ -42,15 +42,14 @@ const RollDice = ({ sides }) => {
       totalScore: score1[0] + score2[0] + score3[0] + score4[0] + score5[0] + totalScore,
     }));
 
-    
-
-    // Start timer of one sec when rolling start
     setTimeout(() => {
-      // Set rolling to false again when time over
+    
       setDices((prevState) => ({ ...prevState, rolling: false}))
     }, 500);
-  };
 
+    console.log(mano)
+  };
+  const mano = [dices.die1[0],dices.die2[0],dices.die3[0],dices.die4[0],dices.die5[0]]
   const handleBtn = setDices.rolling ? "RollDice-rolling" : "";
   
   return (
@@ -65,8 +64,9 @@ const RollDice = ({ sides }) => {
       <button className={handleBtn} disabled={rolling} onClick={roll}>
         {dices.rolling ? "Tirando..." : "¡Tira los dados!"}
       </button>
-      <h2>Score: {score}</h2>
-      <h2>Total Score: {totalScore}</h2>
+      <h2 className='Score'>Score: {score}</h2>
+      <Jugadas mano = {mano}></Jugadas>
+      <h2 className='TotalScore'>Total Score: {totalScore}</h2>
     </div>
   );
 };
