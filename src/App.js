@@ -1,6 +1,7 @@
 import './App.css';
 import Index from './components/Index';
 import RollDice from './components/RollDice.jsx';
+import Tutorial from './components/Tutorial.jsx';
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,16 +11,12 @@ import {
 const App = () => {
   return (
     <Router>
-      <div className="generala">
         <Switch>
           <Route path="/index" component={Index}/>
-          <Route path="/game-on" component={RollDice}/>
+          <Route path="/game" component={RollDice}/>
+          <Route path="/tutorial" component={Tutorial}/>
           <Route path="*" component={Index}/>
         </Switch>
-      </div>
-      <nav>
-
-      </nav>
     </Router>
   );
 }
