@@ -9,11 +9,6 @@
   text-align: center;
 }
 
-.containerD{
-  background-color: khaki;
-  
-}
-
 .lock-button {
   width: 5em;
   padding: 10px;
@@ -26,7 +21,12 @@
   align-self: center;
 }
 
-
+.tiradas{
+  background-color: cadetblue;
+}
+.roll-end-btn{
+  
+}
 .reset-game-btn {
   width: 7em;
   padding: 0.5em;
@@ -42,6 +42,7 @@
   display: flex;
   justify-content: center;
   align-content: center;
+  background-color: khaki;
 }
 /* Stylling rolldice button */
 .RollDice button {
