@@ -11,12 +11,12 @@ import {
 const App = () => {
   return (
     <Router>
-        <Switch>
-          <Route path="/index" component={Index}/>
-          <Route path="/game" component={RollDice}/>
-          <Route path="/tutorial" component={Tutorial}/>
-          <Route path="*" component={Index}/>
-        </Switch>
+      <Switch>
+        <Route path="/index" component={Index} />
+        <Route path="/game" component={RollDice} />
+        <Route path="/tutorial" component={Tutorial} />
+        <Route path="*" component={Index} />
+      </Switch>
     </Router>
   );
 }

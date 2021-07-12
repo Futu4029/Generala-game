@@ -1,17 +1,23 @@
 .start-game {
   background-image: url("../image/background.jpg");
-
   display: flex;
-text-align: center;
+  text-align: center;
   align-items: center;
-  font-family: "Garamond-bold", Times, serif;
   align-content: center;
   position: fixed;
   width: 100%;
   height: 100%;
 }
 
-.htp{
-    text-align: right;
+.htp {
+  text-align: right;
+}
+#root {
+  font-family: "Bahnschrift", "Garamond-bold", serif;
 }
 
+@font-face {
+  font-family: "Palacio";
+  src: local("Palacio"), url("./fonts/Palacio.ttf") format("truetype");
+
+}
