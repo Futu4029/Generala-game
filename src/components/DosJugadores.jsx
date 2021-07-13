@@ -280,6 +280,9 @@ const DosJugadores = ({ sides }) => {
       showPlay: false,
     });
   }
+  const setJugadorActivo1=() =>{
+    jugadorActivo.jugador2?cambiarDeJugador():setDefaultDices();
+  };
 
   const resetGame = () => {
     setDefaultDices();
@@ -288,6 +291,7 @@ const DosJugadores = ({ sides }) => {
     clearAllSaves();
     setTurnos(10);
     setTiradas(3);
+    setJugadorActivo1();
   };
 
   const handleBtn = dices.rolling ? "rolling" : "";

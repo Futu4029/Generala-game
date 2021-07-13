@@ -22,6 +22,7 @@ ol {
   }
 
   .tutorial{
+    margin-top: 20px;
     border: 10px solid black;
     padding: 35px; 
     opacity: 1;
@@ -31,4 +32,13 @@ ol {
 
   .image-dados{
 height: 100%;
+  }
+  .link-tutorial{
+    text-align: center;
+    align-content: center;
+    margin: 10px;
+  }
+
+  .btn-jugador{
+    margin: 10px;
   }

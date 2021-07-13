@@ -32,23 +32,24 @@ const Tutorial = () => {
             de las 11 combinaciones posibles.
           </p>
           <h3>Tipos de jugadas</h3>
-          <p>
-            <ul><li><strong>Escalera:</strong> se consigue si los dados forman
-              1-2-3-4-5 o 2-3-4-5-6. El
-              jugador suma 20 puntos a la combinación escalera.<br></br></li>
-              <li><strong>Full:</strong> tres dados de un mismo valor y dos de un
-                mismo valor, por ejemplo 4-4-4-6-6. El jugador suma 30 puntos a la
-                combinación full.<br></br></li>
-              <li><strong>Poker:</strong> cuatro dados iguales y uno distinto, por
-                ejemplo 2-2-2-2-5. El jugador suma 40 puntos a la combinación
-                poker.<br></br></li>
-              <li><strong>Generala:</strong> los cinco dados del mismo valor, por
-                ejemplo 3-3-3-3-3. El jugador suma 60 puntos a la combinación
-                generala.<br></br></li>
-              <li><strong>Números:</strong> los juegos de dobles suman según el par
-                más alto es decir si salen 2-2-4-6-6 sumaría 12 y trios suman su valor.</li>
-            </ul>
+
+          <ul><p><li><strong>Escalera:</strong> se consigue si los dados forman
+            1-2-3-4-5 o 2-3-4-5-6. El
+            jugador suma 20 puntos a la combinación escalera.<br></br></li>
+            <li><strong>Full:</strong> tres dados de un mismo valor y dos de un
+              mismo valor, por ejemplo 4-4-4-6-6. El jugador suma 30 puntos a la
+              combinación full.<br></br></li>
+            <li><strong>Poker:</strong> cuatro dados iguales y uno distinto, por
+              ejemplo 2-2-2-2-5. El jugador suma 40 puntos a la combinación
+              poker.<br></br></li>
+            <li><strong>Generala:</strong> los cinco dados del mismo valor, por
+              ejemplo 3-3-3-3-3. El jugador suma 60 puntos a la combinación
+              generala.<br></br></li>
+            <li><strong>Números:</strong> los juegos de dobles suman según el par
+              más alto es decir si salen 2-2-4-6-6 sumaría 12 y trios suman su valor.</li>
           </p>
+          </ul>
+
         </ol>
       </div>
     </div>

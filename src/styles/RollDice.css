@@ -1,7 +1,10 @@
 .roll-page{
-  background-image: url("../image/background.jpg");
-  background-repeat: no-repeat;
+  background: url("../image/background.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
+    height: 100%;
 }
 
 .RollDice {
@@ -9,12 +12,22 @@
   flex-flow: column nowrap;
   margin-bottom: 50px;
   color:beige;
-  height: 100%;
 }
 
 .Score,
 .TotalScore {
   text-align: center;
+}
+
+.btn-success{
+  background-color: goldenrod;
+  border-color:#000000;
+}
+
+.btn-success:hover{
+  background-color: goldenrod;
+  border-color:#000000;
+  color:#000000;
 }
 
 .btn-warning {

@@ -60,22 +60,26 @@ const UnJugador = ({ sides }) => {
   }
 
   const cambiarDeJugador = () => {
+    console.log(jugadorActivo.jugador1)
     jugadorActivo.jugador1 ?
-      (setJugadorActivo({
+      setJugadorActivo({
         jugador1: false,
         jugador2: true
-      })) :
+      }) :
       setJugadorActivo({
         jugador1: true,
         jugador2: false
-      })
-    setTiradas(3);
+      });
+
+    jugadorActivo.jugador2 ?
+      setTiradas(3) :
+      setTiradas(1);
   }
 
   const definirPuntaje = (puntos) => {
-    jugadorActivo.jugador1 ? 
-    setPuntajeJugador1(puntos) : 
-    setPuntajeJugador2(puntos)
+    jugadorActivo.jugador1 ?
+      setPuntajeJugador1(puntos) :
+      setPuntajeJugador2(puntos)
   }
 
   const siguienteTurno = () => {
@@ -83,12 +87,12 @@ const UnJugador = ({ sides }) => {
   }
 
   const definirGanador = () => {
-    return score.totalScoreJugador1>score.totalScoreJugador2?
-    "¡GANA EL JUGADOR 1!":
-    score.totalScoreJugador1 === score.totalScoreJugador2?
-    "¡ES UN EMPATE!" :
-    "¡GANA EL JUGADOR 2!";
-  } 
+    return score.totalScoreJugador1 > score.totalScoreJugador2 ?
+      "¡GANA EL JUGADOR!" :
+      score.totalScoreJugador1 === score.totalScoreJugador2 ?
+        "¡ES UN EMPATE!" :
+        "¡GANA TU RIVAL!";
+  }
 
   const cleanScore = () => {
     setScore((prevState) => ({
@@ -126,6 +130,8 @@ const UnJugador = ({ sides }) => {
   const roll = () => {
     cleanScore();
     // Le pregunto por el elemento [1] que es el estado del dado, si es true seteo el mismo, si es false re-rolleo
+
+
     const newDie1 = sides[Math.floor(Math.random() * sides.length)];
     const newDie2 = sides[Math.floor(Math.random() * sides.length)];
     const newDie3 = sides[Math.floor(Math.random() * sides.length)];
@@ -168,7 +174,10 @@ const UnJugador = ({ sides }) => {
     setTiradas((prevState) =>
       prevState - 1
     );
+
   };
+
+  const hacerNada = () => { };
   //const mano = ["one", "two", "three", "four", "five"];
   const mano = manos.manoKeys;
 
@@ -281,6 +290,10 @@ const UnJugador = ({ sides }) => {
     });
   }
 
+  const setJugadorActivo1 = () => {
+    jugadorActivo.jugador2 ? cambiarDeJugador() : hacerNada();
+  };
+
   const resetGame = () => {
     setDefaultDices();
     cleanScore();
@@ -288,35 +301,36 @@ const UnJugador = ({ sides }) => {
     clearAllSaves();
     setTurnos(10);
     setTiradas(3);
+    setJugadorActivo1();
   };
 
   const handleBtn = dices.rolling ? "rolling" : "";
 
   const save = (dado) => {
-    (dado===die1)?
-    setDices((prevState) => ({
-      ...prevState,
-      die1: [dado[0], dado[1]?false:true]
-    })):
-    (dado===die2)?
-    setDices((prevState) => ({
-      ...prevState,
-      die2: [dado[0], dado[1]?false:true]
-    })):
-    (dado===die3)?
-    setDices((prevState) => ({
-      ...prevState,
-      die3: [dado[0], dado[1]?false:true]
-    })):
-    (dado===die4)?
-    setDices((prevState) => ({
-      ...prevState,
-      die4: [dado[0], dado[1]?false:true]
-    })):
-    setDices((prevState) => ({
-      ...prevState,
-      die5: [dado[0], dado[1]?false:true]
-    }));
+    (dado === die1) ?
+      setDices((prevState) => ({
+        ...prevState,
+        die1: [dado[0], dado[1] ? false : true]
+      })) :
+      (dado === die2) ?
+        setDices((prevState) => ({
+          ...prevState,
+          die2: [dado[0], dado[1] ? false : true]
+        })) :
+        (dado === die3) ?
+          setDices((prevState) => ({
+            ...prevState,
+            die3: [dado[0], dado[1] ? false : true]
+          })) :
+          (dado === die4) ?
+            setDices((prevState) => ({
+              ...prevState,
+              die4: [dado[0], dado[1] ? false : true]
+            })) :
+            setDices((prevState) => ({
+              ...prevState,
+              die5: [dado[0], dado[1] ? false : true]
+            }));
   }
   const clearAllSaves = () => {
     setDices((prevState) => ({
@@ -341,7 +355,7 @@ const UnJugador = ({ sides }) => {
             <h3>Tiradas restantes: {tiradas}</h3>
           </div>
           <div className="col-md-12">
-            <h3>Juega: {jugadorActivo.jugador1 ? "Jugador 1" : "Jugador 2"}</h3>
+            <h3>Juega: {jugadorActivo.jugador1 ? "Jugador" : "Rival"}</h3>
           </div>
         </div>
       </div>
@@ -350,31 +364,31 @@ const UnJugador = ({ sides }) => {
           <div className="col-md">
             <Die face={String(die1[0])} rolling={rolling && !die1[1]} />
             <div className="col-sm">
-              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die1)}>{die1[1]?"Devolver":"Guardar"}</button>
+              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die1)}>{die1[1] ? "Devolver" : "Guardar"}</button>
             </div>
           </div>
           <div className="col-md">
             <Die face={String(die2[0])} rolling={rolling && !die2[1]} />
             <div className="col-sm">
-              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die2)}>{die2[1]?"Devolver":"Guardar"}</button>
+              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die2)}>{die2[1] ? "Devolver" : "Guardar"}</button>
             </div>
           </div>
           <div className="col-md">
             <Die face={String(die3[0])} rolling={rolling && !die3[1]} />
             <div className="col-sm">
-              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die3)}>{die3[1]?"Devolver":"Guardar"}</button>
+              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die3)}>{die3[1] ? "Devolver" : "Guardar"}</button>
             </div>
           </div>
           <div className="col-md">
             <Die face={String(die4[0])} rolling={rolling && !die4[1]} />
             <div className="col-sm">
-              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die4)}>{die4[1]?"Devolver":"Guardar"}</button>
+              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die4)}>{die4[1] ? "Devolver" : "Guardar"}</button>
             </div>
           </div>
           <div className="col-md">
             <Die face={String(die5[0])} rolling={rolling && !die5[1]} />
             <div className="col-sm">
-              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die5)}>{die5[1]?"Devolver":"Guardar"}</button>
+              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die5)}>{die5[1] ? "Devolver" : "Guardar"}</button>
             </div>
           </div>
         </div>
@@ -386,34 +400,45 @@ const UnJugador = ({ sides }) => {
       <div className="col-md jugada-display">
         {turnos === 0 ? <div className='container'>
           <h3 className='jugada'>{definirGanador()}</h3>
-        </div>: dices.showPlay? (<div className='container'>
+        </div> : dices.showPlay ? (<div className='container'>
           <h3 className='jugada'>{definirJugada(mano)}</h3>
         </div>) : (<h3>¡Tira los dados!</h3>)
         }
       </div>
       <div className="RollDice">
-        <div className="row roll-end-btn">
-          {turnos > 0 ? <div className="col-md text-center">
-            <button className={handleBtn} disabled={rolling} onClick={tiradasManager}>
-              {dices.rolling ? "Tirando..." : (tiradas > 0 ? "¡Tirar dados!" : "Terminar turno")}
-            </button>
-          </div> : ""}
-          {turnos > 0 ? <div className="col-md text-center">
-            {tiradas > 0 ? <button className={handleBtn} disabled={rolling} onClick={finalizarJugada}>
-              {dices.rolling ? "Tirando..." : "Terminar turno"}
-            </button> : ""}
-          </div> : ""}
-        </div>
+        {jugadorActivo.jugador2 ?
+          <div className="row roll-end-btn">
+            <div className="col-md text-center">
+              <button className={handleBtn} disabled={rolling} onClick={tiradasManager}>
+                Turno del rival
+              </button>
+            </div>
+          </div>
+          : <div className="row roll-end-btn">
+            {turnos > 0 ?
+              <div className="col-md text-center">
+                <button className={handleBtn} disabled={rolling} onClick={tiradasManager}>
+                  {dices.rolling ? "Tirando..." : (tiradas > 0 ? "¡Tirar dados!" : "Terminar turno")}
+                </button>
+              </div> : ""}
+            {turnos > 0 ?
+              <div className="col-md text-center">
+                {tiradas > 0 ?
+                  <button className={handleBtn} disabled={rolling} onClick={finalizarJugada}>
+                    {dices.rolling ? "Tirando..." : "Terminar turno"}
+                  </button> : ""}
+              </div> : ""}
+          </div>}
         <div className="Score">
           <div className="container">
             <div className="row">
               <div className="col-6 score-jugador1">
-                <h4>Jugador 1</h4>
+                <h4>Jugador</h4>
                 <h4 className="Score">Puntaje: {score.scoreJugador1}</h4>
                 <h4 className="TotalScore">Puntaje total: {score.totalScoreJugador1}</h4>
               </div>
               <div className="col-6 score-jugador2">
-                <h4>Jugador 2</h4>
+                <h4>Rival</h4>
                 <h4>Puntaje: {score.scoreJugador2}</h4>
                 <h4>Puntaje total: {score.totalScoreJugador2}</h4>
               </div>
@@ -422,12 +447,12 @@ const UnJugador = ({ sides }) => {
         </div>
       </div>
       <div className="container text-center">
-      <p>¿Quieres comenzar de nuevo?</p>
-      <div className="col-md ">
-        <button className="btn btn-danger btn-sm" onClick={resetGame}>
-          Click aquí
-        </button>
-      </div>
+        <p>¿Quieres comenzar de nuevo?</p>
+        <div className="col-md ">
+          <button className="btn btn-danger btn-sm" onClick={resetGame}>
+            Click aquí
+          </button>
+        </div>
       </div>
     </div>
   );
