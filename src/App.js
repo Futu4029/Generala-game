@@ -1,6 +1,7 @@
 import './App.css';
 import Index from './components/Index';
-import RollDice from './components/RollDice.jsx';
+import UnJugador from './components/UnJugador.jsx';
+import DosJugadores from './components/DosJugadores.jsx';
 import Tutorial from './components/Tutorial.jsx';
 import {
   BrowserRouter as Router,
@@ -13,7 +14,8 @@ const App = () => {
     <Router>
       <Switch>
         <Route path="/index" component={Index} />
-        <Route path="/game" component={RollDice} />
+        <Route path="/unJugador" component={UnJugador} />
+        <Route path="/dosJugadores" component={DosJugadores} />
         <Route path="/tutorial" component={Tutorial} />
         <Route path="*" component={Index} />
       </Switch>

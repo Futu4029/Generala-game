@@ -20,3 +20,15 @@ ol {
     text-align: right;
     content: counter(item) ".";
   }
+
+  .tutorial{
+    border: 10px solid black;
+    padding: 35px; 
+    opacity: 1;
+    color: beige;
+    background-color: brown;
+  }
+
+  .image-dados{
+height: 100%;
+  }

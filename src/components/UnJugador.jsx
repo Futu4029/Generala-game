@@ -3,7 +3,7 @@ import "../styles/RollDice.css";
 import Die from "./Die";
 import NavBar from "./NavBar";
 
-const RollDice = ({ sides }) => {
+const UnJugador = ({ sides }) => {
   const [dices, setDices] = useState({
     die1: ["one", false],
     die2: ["two", false],
@@ -13,8 +13,6 @@ const RollDice = ({ sides }) => {
     rolling: false,
     showPlay: false,
   });
-
-
 
   const [jugadorActivo, setJugadorActivo] = useState({
     jugador1: true,
@@ -30,14 +28,14 @@ const RollDice = ({ sides }) => {
   });
 
   const [manos, setManos] = useState({
-    manoKeys:[
+    manoKeys: [
       dices.die1[0],
       dices.die2[0],
       dices.die3[0],
       dices.die4[0],
       dices.die5[0],
     ],
-    manoValues:[]
+    manoValues: []
   });
 
   const [tiradas, setTiradas] = useState(3);
@@ -75,12 +73,22 @@ const RollDice = ({ sides }) => {
   }
 
   const definirPuntaje = (puntos) => {
-    jugadorActivo.jugador1 ? setPuntajeJugador1(puntos) : setPuntajeJugador2(puntos)
+    jugadorActivo.jugador1 ? 
+    setPuntajeJugador1(puntos) : 
+    setPuntajeJugador2(puntos)
   }
 
   const siguienteTurno = () => {
     jugadorActivo.jugador2 ? setTurnos(prevState => prevState - 1) : setTurnos(prevState => prevState);
   }
+
+  const definirGanador = () => {
+    return score.totalScoreJugador1>score.totalScoreJugador2?
+    "¡GANA EL JUGADOR 1!":
+    score.totalScoreJugador1 === score.totalScoreJugador2?
+    "¡ES UN EMPATE!" :
+    "¡GANA EL JUGADOR 2!";
+  } 
 
   const cleanScore = () => {
     setScore((prevState) => ({
@@ -101,16 +109,18 @@ const RollDice = ({ sides }) => {
     let puntosObtenidos = puntaje(jugadaObtenida);
 
     definirPuntaje(puntosObtenidos)
-    siguienteTurno();
     setDefaultDices();
+    siguienteTurno();
+    setManos((prevState) => ({
+      ...prevState,
+      manoKeys: [die1, die2, die3, die4, die5],
+    }))
     clearAllSaves();
     cambiarDeJugador();
   }
 
-
   const tiradasManager = () => {
     tiradas > 0 ? roll() : finalizarJugada()
-
   }
 
   const roll = () => {
@@ -126,7 +136,6 @@ const RollDice = ({ sides }) => {
     let dieValue3 = die3[1] ? manos.manoValues[2] : Object.values(newDie3)[0];
     let dieValue4 = die4[1] ? manos.manoValues[3] : Object.values(newDie4)[0];
     let dieValue5 = die5[1] ? manos.manoValues[4] : Object.values(newDie5)[0];
-    console.log(die1)
     let dieKey1 = die1[1] ? die1[0] : Object.keys(newDie1)[0];
     let dieKey2 = die2[1] ? die2[0] : Object.keys(newDie2)[0];
     let dieKey3 = die3[1] ? die3[0] : Object.keys(newDie3)[0];
@@ -142,10 +151,10 @@ const RollDice = ({ sides }) => {
       rolling: true,
       showPlay: false,
     }));
-    setManos((prevState) =>({
+    setManos((prevState) => ({
       ...prevState,
-      manoKeys:[dieKey1,dieKey2,dieKey3,dieKey4,dieKey5],
-      manoValues:[dieValue1,dieValue2,dieValue3,dieValue4,dieValue5]
+      manoKeys: [dieKey1, dieKey2, dieKey3, dieKey4, dieKey5],
+      manoValues: [dieValue1, dieValue2, dieValue3, dieValue4, dieValue5]
     }))
 
     setTimeout(() => {
@@ -199,9 +208,7 @@ const RollDice = ({ sides }) => {
   }
 
   const resolverDoble = (mano) => {
-    console.log(mano)
-    mano.sort((a,b)=>b-a);// para sacar el más alto de la lista
-    console.log(mano)
+    mano.sort((a, b) => b - a);// para sacar el más alto de la lista
     let primerDado = mano[0];
     let segundoDado = mano[1];
     let tercerDado = mano[2];
@@ -215,7 +222,6 @@ const RollDice = ({ sides }) => {
   }
 
   const resolverTrio = (mano) => {
-    console.log(mano)
     let primerDado = mano[0];
     let segundoDado = mano[1];
     let tercerDado = mano[2];
@@ -223,9 +229,6 @@ const RollDice = ({ sides }) => {
       mano.filter(dado => dado === primerDado).length === 3 ? primerDado * 3 :
         mano.filter(dado => dado === segundoDado).length === 3 ? segundoDado * 3 :
           tercerDado * 3
-          console.log(mano.filter(dado => dado === primerDado).length === 3)
-          console.log(mano.filter(dado => dado === segundoDado).length === 3)
-          console.log(mano.filter(dado => dado === tercerDado).length === 3)
     return solucion;
   }
 
@@ -290,7 +293,30 @@ const RollDice = ({ sides }) => {
   const handleBtn = dices.rolling ? "rolling" : "";
 
   const save = (dado) => {
-    dado[1] ? dado[1] = false : dado[1] = true
+    (dado===die1)?
+    setDices((prevState) => ({
+      ...prevState,
+      die1: [dado[0], dado[1]?false:true]
+    })):
+    (dado===die2)?
+    setDices((prevState) => ({
+      ...prevState,
+      die2: [dado[0], dado[1]?false:true]
+    })):
+    (dado===die3)?
+    setDices((prevState) => ({
+      ...prevState,
+      die3: [dado[0], dado[1]?false:true]
+    })):
+    (dado===die4)?
+    setDices((prevState) => ({
+      ...prevState,
+      die4: [dado[0], dado[1]?false:true]
+    })):
+    setDices((prevState) => ({
+      ...prevState,
+      die5: [dado[0], dado[1]?false:true]
+    }));
   }
   const clearAllSaves = () => {
     setDices((prevState) => ({
@@ -304,7 +330,7 @@ const RollDice = ({ sides }) => {
   }
 
   return (
-    <div>
+    <div className="roll-page">
       <NavBar />
       <div className="col tiradas">
         <div className="row cabecera">
@@ -323,58 +349,60 @@ const RollDice = ({ sides }) => {
         <div className="row containerD">
           <div className="col-md">
             <Die face={String(die1[0])} rolling={rolling && !die1[1]} />
-            {tiradas===3 ?"":<div className="col-sm">
-              <button className="lock-button" onClick={save.bind(this, die1)}>Guardar</button>
-            </div>}
+            <div className="col-sm">
+              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die1)}>{die1[1]?"Devolver":"Guardar"}</button>
+            </div>
           </div>
           <div className="col-md">
             <Die face={String(die2[0])} rolling={rolling && !die2[1]} />
-            {tiradas===3 ?"":<div className="col-sm">
-           <button className="lock-button" onClick={save.bind(this, die2)}>Guardar</button>
-            </div>}
+            <div className="col-sm">
+              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die2)}>{die2[1]?"Devolver":"Guardar"}</button>
+            </div>
           </div>
           <div className="col-md">
             <Die face={String(die3[0])} rolling={rolling && !die3[1]} />
-            {tiradas===3 ?"":<div className="col-sm">
-              <button className="lock-button" onClick={save.bind(this, die3)}>Guardar</button>
-            </div>}
+            <div className="col-sm">
+              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die3)}>{die3[1]?"Devolver":"Guardar"}</button>
+            </div>
           </div>
           <div className="col-md">
             <Die face={String(die4[0])} rolling={rolling && !die4[1]} />
-            {tiradas===3 ?"":<div className="col-sm">
-              <button className="lock-button" onClick={save.bind(this, die4)}>Guardar</button>
-            </div>}
+            <div className="col-sm">
+              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die4)}>{die4[1]?"Devolver":"Guardar"}</button>
+            </div>
           </div>
           <div className="col-md">
             <Die face={String(die5[0])} rolling={rolling && !die5[1]} />
-            {tiradas===3 ?"":<div className="col-sm">
-              <button className="lock-button" onClick={save.bind(this, die5)}>Guardar</button>
-            </div>}
+            <div className="col-sm">
+              <button className="btn btn-warning" disabled={tiradas === 3} onClick={save.bind(this, die5)}>{die5[1]?"Devolver":"Guardar"}</button>
+            </div>
           </div>
         </div>
 
       </div>
       <div className="col-md clear-button">
-        <button className="btn btn-success" onClick={clearAllSaves}>Clear Saves</button>
+        <button className="btn btn-success" onClick={clearAllSaves}>Devolver todos</button>
       </div>
       <div className="col-md jugada-display">
-        {dices.showPlay ? (<div className='container'>
+        {turnos === 0 ? <div className='container'>
+          <h3 className='jugada'>{definirGanador()}</h3>
+        </div>: dices.showPlay? (<div className='container'>
           <h3 className='jugada'>{definirJugada(mano)}</h3>
-        </div>) : (<h3>{"¡Tira los dados!"}</h3>)
+        </div>) : (<h3>¡Tira los dados!</h3>)
         }
       </div>
       <div className="RollDice">
         <div className="row roll-end-btn">
-          <div className="col-md text-center">
+          {turnos > 0 ? <div className="col-md text-center">
             <button className={handleBtn} disabled={rolling} onClick={tiradasManager}>
               {dices.rolling ? "Tirando..." : (tiradas > 0 ? "¡Tirar dados!" : "Terminar turno")}
             </button>
-          </div>
-          <div className="col-md text-center">
+          </div> : ""}
+          {turnos > 0 ? <div className="col-md text-center">
             {tiradas > 0 ? <button className={handleBtn} disabled={rolling} onClick={finalizarJugada}>
               {dices.rolling ? "Tirando..." : "Terminar turno"}
             </button> : ""}
-          </div>
+          </div> : ""}
         </div>
         <div className="Score">
           <div className="container">
@@ -393,16 +421,19 @@ const RollDice = ({ sides }) => {
           </div>
         </div>
       </div>
-      <div className="col">
-        <button className="reset-game-btn" onClick={resetGame}>
-          Restart game
+      <div className="container text-center">
+      <p>¿Quieres comenzar de nuevo?</p>
+      <div className="col-md ">
+        <button className="btn btn-danger btn-sm" onClick={resetGame}>
+          Click aquí
         </button>
+      </div>
       </div>
     </div>
   );
 };
 
-RollDice.defaultProps = {
+UnJugador.defaultProps = {
   sides: [
     { one: 1 },
     { two: 2 },
@@ -412,4 +443,4 @@ RollDice.defaultProps = {
     { six: 6 },
   ],
 };
-export default RollDice;
+export default UnJugador;

@@ -7,10 +7,10 @@ const NavBar = () => {
   return (
     <div>
       <nav className="navbar navbar-dark bg-dark">
-        <div className="container-fluid">
+        <div className="container-fluid align-self-center">
           <Link to={`/game`} style={{ textDecoration: "none", color: "white" }}>
-            <img src={Image} alt="imagenCubil" width="50" height="30" className="d-inline-block align-text-top"></img>
-            <strong>GENERALA</strong>
+            <img src={Image} alt="imagenCubil" width="50" height="30" className="d-inline-block align-text-center"></img>
+            <strong> GENERALA</strong>
           </Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>

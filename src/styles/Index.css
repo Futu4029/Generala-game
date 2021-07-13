@@ -1,5 +1,7 @@
 .start-game {
   background-image: url("../image/background.jpg");
+  background-repeat: no-repeat;
+  background-size: auto;
   display: flex;
   text-align: center;
   align-items: center;
@@ -7,17 +9,23 @@
   position: fixed;
   width: 100%;
   height: 100%;
+  background-repeat: no-repeat;
+  background-size: auto;
 }
-
+.welcome-text{
+  color:beige
+}
 .htp {
-  text-align: right;
+  align-items: center;
+  justify-content: center;
+  color:beige;
+  background-color: brown;
+  width: 50%;
+}
+.img-dados{
+  width: 25%;
+  justify-content: center;
 }
 #root {
   font-family: "Bahnschrift", "Garamond-bold", serif;
-}
-
-@font-face {
-  font-family: "Palacio";
-  src: local("Palacio"), url("./fonts/Palacio.ttf") format("truetype");
-
 }
